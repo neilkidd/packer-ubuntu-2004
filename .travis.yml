@@ -9,7 +9,6 @@ before_script:
   - wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib"
   - sudo apt-get --quiet update
-  - sudo apt-get --yes upgrade
   - sudo apt-get install --yes linux-headers-$(uname -r) build-essential perl dkms unzip
   - sudo apt-get install --yes --fix-missing virtualbox-6.1
   - echo $(vboxmanage --version)
@@ -20,4 +19,4 @@ before_script:
   - pip install travis-wait-improved
 
 script:
-  - travis-wait-improved --timeout 30m packer build ubuntu.json
+  - travis-wait-improved --timeout 60m packer build ubuntu.json
