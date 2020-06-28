@@ -11,8 +11,9 @@ There are a good number of public vagrant boxes, however each one has some issue
 - [x] English GB localisation. (Locale and keyboard)
 - [x] Ubuntu LTS OOB experience to mimic a locally installed server.
 - [x] All Updates applied.
+- [x] Travis to build and publish.
 - [ ] Ubuntu-mate-core desktop
-- [ ] Try Github actions to auto build and publish up to date boxes.
+- [ ] ~~Github actions to auto build and publish up to date boxes.~~ (No VM support)
 
 ### Credits
 
