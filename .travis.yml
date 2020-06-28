@@ -4,7 +4,7 @@ sudo: required
 
 before_script:
   - sudo apt-get --quiet update
-  - sudo apt-get install --yes wget unzip
+  - sudo apt-get install --yes linux-headers-$(uname -r) build-essential perl dkms wget unzip
   - wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
   - wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib"
