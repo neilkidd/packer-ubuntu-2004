@@ -1,4 +1,5 @@
 # packer-ubuntu-2004
+[![MIT License](https://img.shields.io/github/license/twbs/bootlint.svg)](https://github.com/twbs/bootlint/blob/master/LICENSE)
 
 This repository contains [Packer](https://packer.io/) templates for creating, and publishing, Ubuntu 20.04 [Vagrant](https://www.vagrantup.com/) boxes based on [Virtualbox](https://www.virtualbox.org/).
 
