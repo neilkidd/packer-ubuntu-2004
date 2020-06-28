@@ -9,7 +9,7 @@ before_script:
   - wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib"
   - sudo apt-get --quiet update
-  - sudo apt-get install --yes virtualbox-6.1
+  - sudo apt-get install --yes --fix-missing virtualbox-6.1
   - echo $(vboxmanage --version)
   - wget -O packer.zip https://releases.hashicorp.com/packer/1.6.0/packer_1.6.0_linux_amd64.zip
   - unzip packer.zip
