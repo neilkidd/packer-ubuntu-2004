@@ -1,6 +1,8 @@
 dist: bionic
-language: generic
 sudo: required
+language: python
+python:
+  - "3.8"
 
 before_script:
   - wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
