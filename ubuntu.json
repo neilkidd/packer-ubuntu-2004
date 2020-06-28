@@ -1,0 +1,128 @@
+{
+  "_comment": "Build with `packer build ubuntu.json`",
+  "variables": {
+    "cpus": "1",
+    "disk_size": "32000",
+    "headless": "true",
+    "hostname": "focal",
+    "install_vagrant_key": "true",
+    "iso_checksum": "36f15879bd9dfd061cd588620a164a82972663fdd148cce1f70d57d314c21b73",
+    "iso_checksum_type": "sha256",
+    "iso_name": "ubuntu-20.04-legacy-server-amd64.iso",
+    "iso_path": "./iso",
+    "iso_url": "http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04/release/ubuntu-20.04-legacy-server-amd64.iso",
+    "keyboard_country": "GB",
+    "locale": "en_GB.UTF-8",
+    "memory": "2048",
+    "preseed": "preseed.cfg",
+    "ssh_fullname": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_username": "vagrant",
+    "update": "true",
+    "version": "2004.{{isotime \"20060102.150405\"}}",
+    "vm_name": "ubuntu2004",
+    "vagrantcloud_username": "neil_kidd"
+  },
+  "builders": [
+    {
+      "boot_command": [
+        "<esc><wait><esc><wait><enter><wait>",
+        "/install/vmlinuz ",
+        "noapic ",
+        "initrd=/install/initrd.gz ",
+        "url=http://{{ .HTTPIP}}:{{ .HTTPPort}}/{{user `preseed`}} ",
+        "debian-installer={{user `locale`}} ",
+        "auto=true ",
+        "locale={{user `locale`}} ",
+        "kbd-chooser/method=en ",
+        "hostname={{user `hostname`}} ",
+        "grub-installer/bootdev=/dev/sda<wait> ",
+        "fb=false ",
+        "debconf/frontend=noninteractive ",
+        "keyboard-configuration/modelcode=SKIP ",
+        "keyboard-configuration/layout={{user `keyboard_country`}} ",
+        "keyboard-configuration/variant={{user `keyboard_country`}} ",
+        "console-setup/ask_detect=false ",
+        "passwd/user-fullname={{user `ssh_fullname`}} ",
+        "passwd/user-password={{user `ssh_password`}} ",
+        "passwd/user-password-again={{user `ssh_password`}} ",
+        "passwd/username={{user `ssh_username`}} ",
+        "-- <enter>"
+      ],
+      "disk_size": "{{user `disk_size`}}",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "guest_os_type": "Ubuntu_64",
+      "hard_drive_interface": "sata",
+      "headless": "{{user `headless`}}",
+      "http_directory": "http",
+      "iso_checksum": "{{user `iso_checksum_type`}}:{{user `iso_checksum`}}",
+      "iso_urls": [
+        "{{user `iso_path`}}/{{user `iso_name`}}",
+        "{{user `iso_url`}}"
+      ],
+      "post_shutdown_delay": "1m",
+      "shutdown_command": "echo '{{user `ssh_password`}}'|sudo -S shutdown -P now",
+      "ssh_password": "{{user `ssh_password`}}",
+      "ssh_timeout": "10000s",
+      "ssh_username": "{{user `ssh_username`}}",
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--nictype1",
+          "virtio"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "{{user `memory`}}"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "{{user `cpus`}}"
+        ]
+      ],
+      "virtualbox_version_file": ".vbox_version",
+      "vm_name": "{{user `vm_name`}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "environment_vars": [
+        "DEBIAN_FRONTEND=noninteractive",
+        "UPDATE={{user `update`}}",
+        "INSTALL_VAGRANT_KEY={{user `install_vagrant_key`}}",
+        "SSH_USERNAME={{user `ssh_username`}}",
+        "SSH_PASSWORD={{user `ssh_password`}}"
+      ],
+      "execute_command": "echo '{{user `ssh_password`}}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
+      "expect_disconnect": "true",
+      "scripts": [
+        "script/update.sh",
+        "script/vagrant.sh",
+        "script/sshd.sh",
+        "script/virtualbox.sh",
+        "script/motd.sh",
+        "script/cleanup.sh"
+      ],
+      "type": "shell"
+    }
+  ],
+  "post-processors": [
+      [
+        {
+          "type": "vagrant",
+          "output": "builds/{{.Provider}}-{{user `vm_name`}}.{{user `version`}}.box"
+        },
+        {
+          "type": "vagrant-cloud",
+          "box_tag": "{{user `vagrantcloud_username`}}/{{user `vm_name`}}",
+          "version": "{{user `version`}}"
+        }
+      ]
+  ]
+}
