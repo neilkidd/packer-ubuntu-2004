@@ -84,6 +84,18 @@
           "{{.Name}}",
           "--cpus",
           "{{user `cpus`}}"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--graphicscontroller",
+          "vmsvga"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--vram",
+          "9"
         ]
       ],
       "virtualbox_version_file": ".vbox_version",
