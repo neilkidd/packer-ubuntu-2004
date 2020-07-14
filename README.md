@@ -1,6 +1,6 @@
 # packer-ubuntu-2004
 
-[![Build Status](https://travis-ci.com/neilkidd/packer-ubuntu-2004.svg?branch=master)](https://travis-ci.com/neilkidd/packer-ubuntu-2004) [![MIT License](https://img.shields.io/github/license/twbs/bootlint.svg)](https://github.com/twbs/bootlint/blob/master/LICENSE) 
+[![Build Status](https://travis-ci.com/neilkidd/packer-ubuntu-2004.svg?branch=master)](https://travis-ci.com/neilkidd/packer-ubuntu-2004) [![MIT License](https://img.shields.io/github/license/twbs/bootlint.svg)](https://github.com/twbs/bootlint/blob/master/LICENSE)
 
 This repository contains [Packer](https://packer.io/) templates for creating, and publishing, Ubuntu 20.04 [Vagrant](https://www.vagrantup.com/) boxes based on [Virtualbox](https://www.virtualbox.org/).
 
@@ -50,7 +50,7 @@ After a few minutes a ready to use box will be in the builds directory.
 1. Create an [Authentication Token](https://app.vagrantup.com/settings/security)
     1. Save the long string somewhere safe. Later, this will be exported as the env variable `VAGRANT_CLOUD_TOKEN`.
 1. Create a new [Vagrant Box](https://app.vagrantup.com/)
-    1. __Tip:__ Enter the *Name* as `ubuntu2004`.  
+    1. __Tip:__ Enter the *Name* as `ubuntu2004`  
     In the next step, the value for ` "vm_name": ` will not need editing.
 1. Edit [ubuntu.json](ubuntu.json), changing the values for:  
 `"vagrantcloud_username": "neil_kidd"`  
